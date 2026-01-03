@@ -10,3 +10,9 @@
 - mybatis-plus 3.5.15
 - mybatis-plus-generator 3.5.15
 - freemarker 2.3.33
+- playwright
+
+前端架构
+
+
+大乐透数据爬取与预测

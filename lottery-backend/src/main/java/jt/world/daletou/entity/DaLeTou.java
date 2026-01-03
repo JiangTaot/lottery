@@ -1,9 +1,10 @@
 package jt.world.daletou.entity;
 
-import lombok.Data;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+import java.time.LocalDateTime;
 /**
 * <p>
 * 大乐透 实体类

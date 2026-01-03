@@ -2,6 +2,7 @@ package jt.world.daletou.controller;
 
 import jt.world.daletou.service.IDaLeTouService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,4 +21,8 @@ public class DaLeTouController {
 
     private final IDaLeTouService iDaLeTouService;
 
+    @PostMapping("/getDaLeTouHistory")
+    public void getDaLeTouHistory() {
+        iDaLeTouService.getDaLeTouHistory();
+    }
 }

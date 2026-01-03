@@ -45,7 +45,7 @@
       </dependency>
       <dependency>
           <groupId>com.baomidou</groupId>
-          <artifactId>mybatis-plus-boot-starter</artifactId>
+          <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
           <version>3.5.15</version>
       </dependency>
       <dependency>
@@ -57,6 +57,13 @@
           <groupId>org.freemarker</groupId>
           <artifactId>freemarker</artifactId>
           <version>2.3.33</version>
+      </dependency>
+
+      <!--自动化测试和爬虫技术-->
+      <dependency>
+          <groupId>com.microsoft.playwright</groupId>
+          <artifactId>playwright</artifactId>
+          <version>1.57.0</version>
       </dependency>
 
       <!--开发工具包-->

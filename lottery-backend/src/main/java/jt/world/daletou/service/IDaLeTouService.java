@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IDaLeTouService extends IService<DaLeTou> {
 
+    void getDaLeTouHistory();
 }
