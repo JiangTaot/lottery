@@ -43,6 +43,7 @@ public class DaLeTouSpider {
             FrameLocator iframe = page.locator("iframe[name=\"iFrame1\"]").contentFrame();
             // 进入网站后获取第一页的大乐透数据，之后循环点击下一页，获取下一页数据，直到没有下一页或下一页点击不了时停止循环
             boolean hasNextPage = true;
+            int count = 0;
             while (hasNextPage) {
                 // 经分析获取其<tbody id="historyData">标签中的所有tr标签
                 List<ElementHandle> trs = iframe.locator("tbody#historyData tr").elementHandles();
@@ -108,7 +109,12 @@ public class DaLeTouSpider {
                 Locator nextPageButton = iframe.getByText("下一页");
                 String nextPageButtonAttr = nextPageButton.getAttribute("class");
                 if (nextPageButtonAttr != null && nextPageButtonAttr.contains("no")) {
-                    hasNextPage = false;
+                    count ++;
+                    if (count >= 2) {
+                        hasNextPage = false;
+                    } else {
+                        nextPageButton.click();
+                    }
                 } else {
                     nextPageButton.click();
                 }
