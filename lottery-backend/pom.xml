@@ -66,6 +66,14 @@
           <version>1.57.0</version>
       </dependency>
 
+      <!-- Spring AI 通义千问适配依赖 -->
+      <dependency>
+          <groupId>com.alibaba.cloud.ai</groupId>
+          <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
+          <version>1.0.0.2</version>
+      </dependency>
+
+
       <!--开发工具包-->
       <dependency>
           <groupId>cn.hutool</groupId>

@@ -5,6 +5,13 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/lottery?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&remarks=true&useInformationSchema=true
     username: root
+  ai:
+    dashscope:
+      api-key: sk-d25302429c494d70b9c36f027db09108 # 阿里云百炼大模型
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      chat:
+        options:
+          model: qwen3-max
 
 server:
   port: 8888
