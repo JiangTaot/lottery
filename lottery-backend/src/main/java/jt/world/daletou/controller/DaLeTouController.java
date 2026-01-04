@@ -1,8 +1,11 @@
 package jt.world.daletou.controller;
 
+import jt.world.daletou.dto.DaLeTouPromptDto;
 import jt.world.daletou.service.IDaLeTouService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +27,10 @@ public class DaLeTouController {
     @PostMapping("/getDaLeTouHistory")
     public void getDaLeTouHistory() {
         iDaLeTouService.getDaLeTouHistory();
+    }
+
+    @PostMapping("/getDaLeTouPredict")
+    public ResponseEntity<?> getDaLeTouPredict(@RequestBody DaLeTouPromptDto daLeTouPromptDto) {
+        return ResponseEntity.ok(iDaLeTouService.getDaLeTouPredict(daLeTouPromptDto));
     }
 }

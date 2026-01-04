@@ -1,5 +1,6 @@
 package jt.world.daletou.service;
 
+import jt.world.daletou.dto.DaLeTouPromptDto;
 import jt.world.daletou.entity.DaLeTou;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -14,4 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IDaLeTouService extends IService<DaLeTou> {
 
     void getDaLeTouHistory();
+
+    String getDaLeTouPredict(DaLeTouPromptDto daLeTouPromptDto);
 }

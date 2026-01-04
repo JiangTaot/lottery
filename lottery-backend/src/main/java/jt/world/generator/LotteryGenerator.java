@@ -10,7 +10,7 @@ import java.util.List;
 public class LotteryGenerator {
     private static final String URL = "jdbc:mysql://localhost:3306/lottery?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "LoL@20201112";
     private static final String DALETOU_MODEL_PATH = "D:\\project\\jtworld\\lottery\\lottery-backend\\src\\main\\java";
 
 
