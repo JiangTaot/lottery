@@ -1,17 +1,22 @@
 package jt.world.ai;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jt.world.daletou.entity.DaLeTou;
 import jt.world.daletou.service.IDaLeTouService;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 @SpringBootTest
+@ActiveProfiles("acer")
 public class DaLeTouAiPredictTest {
 
     @Autowired
@@ -21,7 +26,7 @@ public class DaLeTouAiPredictTest {
 
     @Test
     public void testPredictDaLeTou() {
-        List<DaLeTou> daLeTouHistory = daLeTouService.list();
+        List<DaLeTou> daLeTouHistory = daLeTouService.list(new LambdaQueryWrapper<DaLeTou>().orderBy(true, true, DaLeTou::getId));
 
         StringBuilder trainingText = new StringBuilder();
         for (DaLeTou record : daLeTouHistory) {
@@ -34,18 +39,20 @@ public class DaLeTouAiPredictTest {
                     .append("\n");
         }
 
-//        String prompt = "根据以下历史大乐透开奖数据，预测下一期的红球和蓝球号码：" + trainingText +
-//                "\n请输出格式为：红球：[x,x,x,x,x]，蓝球：[x,x]";
-
-        String prompt = "根据以下历史大乐透开奖数据，红球：[07, 09, 23, 27, 32]，蓝球：[02, 08] 出现过吗？有出现过类似的号码吗，在什么时候，类似号码是什么" + trainingText +
-                "\n请输出格式为：红球：[x,x,x,x,x]，蓝球：[x,x]，这注号码作为25150期开奖号码概率大吗";
-
-
+        String prompt = "根据以下历史大乐透开奖数据,第25124期开奖号码是什么" + trainingText +
+                "\n请输出格式为：红球：[x,x,x,x,x]，蓝球：[x,x]";
 
         ChatClient chatClient = ChatClient.builder(chatModel).build();
 
-        ChatResponse chatResponse = chatClient.prompt(prompt).call().chatResponse();
+        ChatResponse chatResponse = chatClient.prompt().user(prompt).call().chatResponse();
 
         System.out.println(chatResponse.getResult().getOutput().getText());
+        UserMessage userMessage = new UserMessage(prompt);
+        List<Message> messages = List.of(userMessage);
+
+        prompt = "第25125期开奖号码是什么";
+        ChatResponse chatResponse2 = chatClient.prompt().messages(messages).user(prompt).call().chatResponse();
+        System.out.println(chatResponse2.getResult().getOutput().getText());
     }
+
 }
