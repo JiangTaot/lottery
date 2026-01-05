@@ -7,12 +7,16 @@ spring:
     username: root
     password: LoL@20201112
   ai:
-    dashscope:
-      api-key: sk-d25302429c494d70b9c36f027db09108 # 阿里云百炼大模型
-      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+#    dashscope:
+#      api-key: sk-d25302429c494d70b9c36f027db09108 # 阿里云百炼大模型
+#      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+#      chat:
+#        options:
+#          model: qwen3-max
+    ollama:
+      base-url: http://localhost:11434
       chat:
-        options:
-          model: qwen3-max
+        model: qwen3-vl:30b
 
 server:
   port: 8888

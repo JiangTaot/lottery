@@ -13,5 +13,7 @@ spring:
         options:
           model: qwen3-max
 
+
+
 server:
   port: 8888
