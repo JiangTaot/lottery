@@ -51,6 +51,18 @@ public class DaLeTouServiceImpl extends ServiceImpl<DaLeTouMapper, DaLeTou> impl
     }
 
     @Override
+    public void getLatestDaLeTou() {
+        DaLeTou daLeTou = daLeTouSpider.getLatestDaLeTou();
+        if (daLeTou == null) {
+            return;
+        }
+        boolean isSaved = this.save(daLeTou);
+        if (!isSaved) {
+            throw new RuntimeException("保存大乐透最新开奖数据失败");
+        }
+    }
+
+    @Override
     public String getDaLeTouPredict(DaLeTouPromptDto daLeTouPromptDto) {
         // 大乐透历史数据
         StringBuilder trainingText = new StringBuilder();

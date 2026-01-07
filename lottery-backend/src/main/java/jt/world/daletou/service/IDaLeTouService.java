@@ -16,5 +16,7 @@ public interface IDaLeTouService extends IService<DaLeTou> {
 
     void getDaLeTouHistory();
 
+    void getLatestDaLeTou();
+
     String getDaLeTouPredict(DaLeTouPromptDto daLeTouPromptDto);
 }

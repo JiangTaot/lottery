@@ -20,6 +20,7 @@ import java.util.List;
 public class DaLeTouSpider {
 
     private static final String DA_LE_TOU_HISTORY_URL = "https://www.lottery.gov.cn/kj/kjlb.html?dlt";
+    private static final String DA_LE_TOU_URL = "https://www.lottery.gov.cn/dlt/";
 
     /**
      * 获取大乐透历史数据
@@ -109,7 +110,7 @@ public class DaLeTouSpider {
                 Locator nextPageButton = iframe.getByText("下一页");
                 String nextPageButtonAttr = nextPageButton.getAttribute("class");
                 if (nextPageButtonAttr != null && nextPageButtonAttr.contains("no")) {
-                    count ++;
+                    count++;
                     if (count >= 2) {
                         hasNextPage = false;
                     } else {
@@ -123,6 +124,57 @@ public class DaLeTouSpider {
             return results;
         } catch (Exception e) {
             log.error("获取大乐透历史数据失败", e);
+            return null;
+        }
+    }
+
+    /**
+     * 获取大乐透最新开奖数据
+     */
+    public DaLeTou getLatestDaLeTou() {
+        log.info("获取大乐透最新开奖数据");
+        try (Playwright playwright = Playwright.create()) {
+            // 启动 chromium 浏览器并返回一个浏览器实例
+            Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
+            // 创建一个新的浏览器上下文
+            BrowserContext context = browser.newContext();
+            // 创建一个新的页面
+            Page page = context.newPage();
+            // 访问大乐透页面
+            page.navigate(DA_LE_TOU_URL);
+
+            String idNumber = page.locator("#dltData > div.win-date > span:nth-child(1)").textContent();
+            String drawTimeFormat = page.locator("#dltData > div.win-date > span:nth-child(2)").textContent();
+            String redBallOne = page.locator("#dltData > ul > li:nth-child(1)").textContent();
+            String redBallTwo = page.locator("#dltData > ul > li:nth-child(2)").textContent();
+            String redBallThree = page.locator("#dltData > ul > li:nth-child(3)").textContent();
+            String redBallFour = page.locator("#dltData > ul > li:nth-child(4)").textContent();
+            String redBallFive = page.locator("#dltData > ul > li:nth-child(5)").textContent();
+            String blueBallOne = page.locator("#dltData > ul > li:nth-child(6)").textContent();
+            String blueBallTwo = page.locator("#dltData > ul > li:nth-child(7)").textContent();
+
+            DaLeTou daLeTou = new DaLeTou();
+            // 第26002期 取出26002 用正则
+            daLeTou.setId(idNumber.replaceAll("\\D+", ""));
+            // "01月05日 周一" 转为 01-05 正则
+            String drawTime = drawTimeFormat.replaceAll("[月]", "-").replaceAll("日.*", "");
+
+            daLeTou.setDrawTime(LocalDateTime.parse(LocalDateTime.now().getYear() + "-" + drawTime + "T21:30:00"));
+            daLeTou.setRedOne(redBallOne);
+            daLeTou.setRedTwo(redBallTwo);
+            daLeTou.setRedThree(redBallThree);
+            daLeTou.setRedFour(redBallFour);
+            daLeTou.setRedFive(redBallFive);
+            daLeTou.setBlueOne(blueBallOne);
+            daLeTou.setBlueTwo(blueBallTwo);
+
+            log.info("获取大乐透最新开奖数据完成，期号：{}，开奖时间：{}, 红球：[{}, {}, {}, {}, {}]，蓝球：[{}, {}]",
+                    daLeTou.getId(), daLeTou.getDrawTime(),
+                    daLeTou.getRedOne(), daLeTou.getRedTwo(), daLeTou.getRedThree(), daLeTou.getRedFour(), daLeTou.getRedFive(),
+                    daLeTou.getBlueOne(), daLeTou.getBlueTwo()) ;
+            return daLeTou;
+        } catch (Exception e) {
+            log.error("获取大乐透最新开奖数据失败", e);
             return null;
         }
     }

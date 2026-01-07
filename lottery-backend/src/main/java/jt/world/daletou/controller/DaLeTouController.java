@@ -29,6 +29,11 @@ public class DaLeTouController {
         iDaLeTouService.getDaLeTouHistory();
     }
 
+    @PostMapping("/getLatestDaLeTou")
+    public void getLatestDaLeTou() {
+        iDaLeTouService.getLatestDaLeTou();
+    }
+
     @PostMapping("/getDaLeTouPredict")
     public ResponseEntity<?> getDaLeTouPredict(@RequestBody DaLeTouPromptDto daLeTouPromptDto) {
         return ResponseEntity.ok(iDaLeTouService.getDaLeTouPredict(daLeTouPromptDto));
