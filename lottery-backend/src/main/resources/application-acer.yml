@@ -16,7 +16,8 @@ spring:
     ollama:
       base-url: http://localhost:11434
       chat:
-        model: qwen3-vl:30b
+#        model: qwen3-vl:30b
+        model: gpt-oss:120b
 
 server:
   port: 8888

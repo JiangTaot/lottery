@@ -86,4 +86,25 @@ public class OllamaChatTest {
 
         System.out.println("--------------------");
     }
+
+    @Test
+    public void testOllamaChatPredict() {
+
+        // 历史数据
+        List<DaLeTou> daLeTouHistory = daLeTouService.list(new LambdaQueryWrapper<DaLeTou>().orderBy(true, true, DaLeTou::getId));
+        StringBuilder trainingText = new StringBuilder();
+        for (DaLeTou record : daLeTouHistory) {
+            trainingText.append("期号: ").append(record.getId())
+                    .append(", 开奖时间: ").append(record.getDrawTime())
+                    .append(", 红球: ").append(record.getRedOne()).append(",").append(record.getRedTwo())
+                    .append(",").append(record.getRedThree()).append(",").append(record.getRedFour())
+                    .append(",").append(record.getRedFive())
+                    .append(", 蓝球: ").append(record.getBlueOne()).append(",").append(record.getBlueTwo())
+                    .append("\n");
+        }
+        String prompt = "根据以下历史大乐透开奖数据,第26003期开奖号码是什么，与提供的历史数据中哪些期的数据相似，可有完全相同的号码" + trainingText +
+                "\n请输出格式为：红球：[x,x,x,x,x]，蓝球：[x,x]";
+        ChatResponse chatResponse = ollamaChatClient.prompt().user(prompt).call().chatResponse();
+        System.out.println(chatResponse.getResult().getOutput().getText());
+    }
 }
